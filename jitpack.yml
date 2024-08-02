@@ -1,6 +1,10 @@
 jdk:
   - openjdk21
 
-before_install:
-  - sdk install java 21.0.0-amzn
-  - sdk use java 21.0.0-amzn
+#before_install:
+#  - sdk install java 21.0.0-amzn
+#  - sdk use java 21.0.0-amzn
+#
+#install:
+#  - echo "build command"
+#  - ./gradlew clean build -xtest
