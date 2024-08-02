@@ -60,13 +60,13 @@ tasks.register("javadocJar", Jar::class) {
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
+            groupId = "com.jsoncsvbridge"
+            artifactId = "json-csv-bridge"
+            version = "0.0.3"
+
             from(components["java"])
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
-
-            groupId = "com.jsoncsvbridge"
-            artifactId = "json-csv-bridge"
-            version = "0.0.2"
 
             pom {
                 name.set("json csv bridge")
