@@ -9,9 +9,8 @@ import com.jsoncsvbridge.filter.FilterCriteria
 class JsonDataFilter : DataFilter {
     private val objectMapper = ObjectMapper()
 
-    override fun filter(jsonData: String, criteria: FilterCriteria): String {
-        val jsonNode = objectMapper.readTree(jsonData)
-        return when (jsonNode) {
+    override fun filter(data: String, criteria: FilterCriteria): String {
+        return when (val jsonNode = objectMapper.readTree(data)) {
             is ObjectNode -> filterObjectNode(jsonNode, criteria)
             is ArrayNode -> filterArrayNode(jsonNode, criteria)
             else -> throw IllegalArgumentException("Unsupported JSON data type")
