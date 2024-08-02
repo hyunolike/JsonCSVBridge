@@ -3,6 +3,7 @@
 .idea/
 
 HELP.md
+.gradle/8.8/fileHashes/fileHashes.lock
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
