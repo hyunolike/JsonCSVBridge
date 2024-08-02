@@ -6,5 +6,5 @@ before_install:
   - sdk use java 21.0.0-amzn
 
 install:
-  - echo "Running a custom install command"
-  - ./gradlew clean install -xtest
+  - echo "build command"
+  - ./gradlew clean build -xtest

@@ -64,6 +64,10 @@ publishing {
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
 
+            groupId = "com.jsoncsvbridge"
+            artifactId = "json-csv-bridge"
+            version = "0.0.2"
+
             pom {
                 name.set("json csv bridge")
                 description.set("A library for converting JSON data to CSV format")
