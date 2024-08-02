@@ -4,3 +4,7 @@ jdk:
 before_install:
   - sdk install java 21.0.0-amzn
   - sdk use java 21.0.0-amzn
+
+install:
+  - echo "Running a custom install command"
+  - ./gradlew clean install -xtest
