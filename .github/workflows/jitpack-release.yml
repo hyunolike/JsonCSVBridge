@@ -1,0 +1,49 @@
+name: JitPack Release
+
+on:
+  push:
+    branches:
+      - release
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Publish to JitPack
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          echo "Publishing to JitPack for tag ${{ github.ref }}"
+          # JitPack은 GitHub에서 푸시된 태그를 자동으로 인식하므로 별도의 푸시 작업이 필요하지 않습니다.
+          # 단순히 빌드가 성공하면, JitPack에서 새로운 버전을 감지합니다.
+          # 필요시 추가 스크립트를 여기에 포함할 수 있습니다.
+
+      - name: Notify JitPack
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          echo "Notifying JitPack about the new release..."
+          curl -X POST https://jitpack.io/api/builds/${{ github.repository }}/commits/${{ github.sha }}
+
