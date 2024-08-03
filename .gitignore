@@ -1,3 +1,9 @@
+### 예제 샘프 ###
+examples/
+examples/spring-boot-kotlin/.idea/
+
+
+
 ### intellij ###
 *.iml
 .idea/
