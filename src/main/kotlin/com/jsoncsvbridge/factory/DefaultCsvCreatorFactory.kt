@@ -20,4 +20,11 @@ class DefaultCsvCreatorFactory : CsvCreatorFactory {
             else -> throw IllegalArgumentException("Unknown type")
         }
     }
+
+    companion object {
+        @JvmStatic
+        fun createCsvCreator(type: String): CsvCreator {
+            return DefaultCsvCreatorFactory().createCsvCreator(type)
+        }
+    }
 }
