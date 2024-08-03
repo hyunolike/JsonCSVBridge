@@ -23,7 +23,7 @@ class DefaultCsvCreatorFactory : CsvCreatorFactory {
 
     companion object {
         @JvmStatic
-        fun createCsvCreator(type: String): CsvCreator {
+        fun createCsv(type: String): CsvCreator {
             return DefaultCsvCreatorFactory().createCsvCreator(type)
         }
     }
