@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.jsoncsvbridge"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.6"
 
 java {
     toolchain {
@@ -62,7 +62,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             groupId = "com.jsoncsvbridge"
             artifactId = "json-csv-bridge"
-            version = "0.0.3"
+            version = "0.0.6"
 
             from(components["java"])
             artifact(tasks["sourcesJar"])
