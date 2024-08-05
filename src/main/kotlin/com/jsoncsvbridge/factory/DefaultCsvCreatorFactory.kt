@@ -2,6 +2,7 @@ package com.jsoncsvbridge.factory
 
 import com.jsoncsvbridge.csv.CsvCreator
 import com.jsoncsvbridge.csv.DefaultCsvFormatter
+import com.jsoncsvbridge.csv.MergeCsvCreator
 import com.jsoncsvbridge.json.*
 import org.springframework.stereotype.Component
 
@@ -15,6 +16,11 @@ class DefaultCsvCreatorFactory : CsvCreatorFactory {
                 JsonDataValidator(),
                 JsonToCsvDataWriter()
             )
+            "mergeJson" -> MergeJsonToCsvCreator(
+                MergeJsonRecords(),
+                JsonDataValidator(),
+                JsonToCsvDataWriter()
+            )
             else -> throw IllegalArgumentException("Unknown type")
         }
     }
@@ -22,8 +28,13 @@ class DefaultCsvCreatorFactory : CsvCreatorFactory {
     // generateCsv 24.08.03
     companion object {
         @JvmStatic
-        fun generateCsv(type: String): CsvCreator {
+        fun generateCsv(type : String): CsvCreator {
             return DefaultCsvCreatorFactory().createCsvCreator(type)
+        }
+
+        @JvmStatic
+        fun generateMergeCsv(): MergeCsvCreator {
+            return DefaultCsvCreatorFactory().createCsvCreator("mergeJson") as MergeCsvCreator
         }
     }
 }

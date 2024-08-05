@@ -14,13 +14,13 @@ class JsonToCsvDataWriter : CsvWriter {
 
         File(outputPath).printWriter().use { out ->
             // 헤더 쓰기
-            val headers = data.first().keys
+            val headers = data.flatMap { it.keys }.toSet()
             out.println(headers.joinToString(","))
 
             // 데이터 쓰기
             data.forEach { row ->
                 val rowValues = headers.map { header ->
-                    escapeCsvValue(row[header]?.toString() ?: "")
+                    escapeCsvValue(row[header]?.toString() ?: "NULL")
                 }
                 out.println(rowValues.joinToString(","))
             }
