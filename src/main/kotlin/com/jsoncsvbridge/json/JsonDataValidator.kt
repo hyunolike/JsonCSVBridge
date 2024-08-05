@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:filename")
+
 package com.jsoncsvbridge.json
 
 import com.jsoncsvbridge.csv.CsvValidator
@@ -15,19 +17,19 @@ class JsonDataValidator : CsvValidator {
         }
     }
 
-    private fun validateAndClean(jsonObject: JSONObject): Map<String, Any?> {
-        return jsonObject.keys().asSequence().associate { key ->
-            key to when {
-                jsonObject.isNull(key) -> null
-                jsonObject.get(key) is JSONObject -> validateAndClean(jsonObject.getJSONObject(key))
-                jsonObject.get(key) is JSONArray -> validateJsonArray(jsonObject.getJSONArray(key))
-                else -> jsonObject.get(key)
-            }
+    private fun validateAndClean(jsonObject: JSONObject): Map<String, Any?> =
+        jsonObject.keys().asSequence().associate { key ->
+            key to
+                when {
+                    jsonObject.isNull(key) -> null
+                    jsonObject.get(key) is JSONObject -> validateAndClean(jsonObject.getJSONObject(key))
+                    jsonObject.get(key) is JSONArray -> validateJsonArray(jsonObject.getJSONArray(key))
+                    else -> jsonObject.get(key)
+                }
         }
-    }
 
-    private fun validateJsonArray(jsonArray: JSONArray): List<Any?> {
-        return (0 until jsonArray.length()).map { index ->
+    private fun validateJsonArray(jsonArray: JSONArray): List<Any?> =
+        (0 until jsonArray.length()).map { index ->
             when {
                 jsonArray.isNull(index) -> null
                 jsonArray.get(index) is JSONObject -> validateAndClean(jsonArray.getJSONObject(index))
@@ -35,5 +37,4 @@ class JsonDataValidator : CsvValidator {
                 else -> jsonArray.get(index)
             }
         }
-    }
 }
