@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:no-wildcard-imports")
+
 package com.jsoncsvbridge.json
 
 import org.junit.jupiter.api.Assertions.*
@@ -8,14 +10,15 @@ class JsonDataValidatorTest {
 
     @Test
     fun `test validate with various data types`() {
-        val jsonInput = """
+        val jsonInput =
+            """
             [
                 {"id": 1, "name": "John Doe", "email": "john@example.com", "age": 30},
                 {"id": 2, "name": "Jane Smith", "email": null, "city": "New York"},
                 {"id": 3, "name": "Bob Johnson", "age": null, "isStudent": true},
                 {"id": 4, "name": "Alice Brown", "score": 95, "subjects": ["Math", "Science"]}
             ]
-        """.trimIndent()
+            """.trimIndent()
 
         val result = validator.validate(jsonInput)
 

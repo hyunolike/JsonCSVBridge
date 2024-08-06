@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("org.springframework.boot") version "3.3.2" apply false
     id("io.spring.dependency-management") version "1.1.6"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     `maven-publish`
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
@@ -31,7 +34,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
 }
 
@@ -41,22 +44,19 @@ dependencyManagement {
     }
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll("-Xjsr305=strict")
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "21"
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-tasks.register("sourcesJar", Jar::class) {
+tasks.register<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
 }
 
-tasks.register("javadocJar", Jar::class) {
+tasks.register<Jar>("javadocJar") {
     archiveClassifier.set("javadoc")
     from(tasks.javadoc)
 }
@@ -100,4 +100,32 @@ publishing {
             }
         }
     }
+}
+
+// ktlint configuration
+ktlint {
+    verbose.set(true)
+    outputToConsole.set(true)
+    coloredOutput.set(true)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.JSON)
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+
+    // 와일드카드 임포트 규칙 비활성화
+    disabledRules.set(setOf("no-wildcard-imports"))
+}
+
+// Optional: Add ktlint check to check task
+tasks.named("check") {
+    dependsOn("ktlintCheck")
+}
+
+// Optional: Add ktlint format to build task
+tasks.named("build") {
+    dependsOn("ktlintFormat")
 }

@@ -1,5 +1,6 @@
+@file:Suppress("ktlint:standard:no-wildcard-imports")
+
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.jsoncsvbridge.csv.MergeCsvCreator
 import com.jsoncsvbridge.factory.DefaultCsvCreatorFactory
 import com.jsoncsvbridge.json.JsonToCsvCreator
@@ -12,7 +13,6 @@ import java.io.File
 import java.nio.file.Path
 
 class DefaultCsvCreatorFactoryTest {
-
     private val factory = DefaultCsvCreatorFactory()
     private val objectMapper = jacksonObjectMapper()
 
@@ -52,7 +52,9 @@ class DefaultCsvCreatorFactoryTest {
     }
 
     @Test
-    fun `test createCsv and validate contents`(@TempDir tempDir: Path) {
+    fun `test createCsv and validate contents`(
+        @TempDir tempDir: Path,
+    ) {
         val creator = factory.createCsvCreator("json")
         val outputPath = tempDir.resolve("test_output.csv").toString()
         val data = """
@@ -61,7 +63,7 @@ class DefaultCsvCreatorFactoryTest {
                 {"name": "Alice", "age": 25, "city": "London"},
                 {"name": "Bob", "age": 35, "city": "Paris"}
             ]
-        """;
+        """
 
         creator.createCsv(data, outputPath)
 
@@ -81,7 +83,9 @@ class DefaultCsvCreatorFactoryTest {
     }
 
     @Test
-    fun `test createMergedCsv and validate contents`(@TempDir tempDir: Path) {
+    fun `test createMergedCsv and validate contents`(
+        @TempDir tempDir: Path,
+    ) {
         val creator = factory.createCsvCreator("mergeJson") as MergeCsvCreator
         val outputPath = tempDir.resolve("test_merged_output.csv").toString()
         val data1 = """
@@ -109,7 +113,9 @@ class DefaultCsvCreatorFactoryTest {
     }
 
     @Test
-    fun `test createMergedCsv with different key-value pairs and validate contents`(@TempDir tempDir: Path) {
+    fun `test createMergedCsv with different key-value pairs and validate contents`(
+        @TempDir tempDir: Path,
+    ) {
         val creator = factory.createCsvCreator("mergeJson") as MergeCsvCreator
         val outputPath = tempDir.resolve("test_merged_output.csv").toString()
         val data1 = """
