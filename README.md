@@ -113,3 +113,7 @@ val data2 = """
 mergeJsonCreator.createMergedCsv(data1, data2, mergeJsonOutputPath)
 println("Merged 2 JSON files and converted to CSV. File saved at: $mergeJsonOutputPath")
 ```
+
+## Learn more about JsonCSVBridge
+### Get Involved
+- 🚀[Contributing Guide](https://github.com/hyunolike/json-csv-bridge/discussions/33)
