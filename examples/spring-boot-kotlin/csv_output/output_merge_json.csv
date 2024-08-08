@@ -1,0 +1,4 @@
+country,city,name,age,occupation,hobby
+USA,New York,John,30,NULL,NULL
+NULL,London,Alice,25,Engineer,NULL
+NULL,Paris,Bob,35,NULL,Photography
